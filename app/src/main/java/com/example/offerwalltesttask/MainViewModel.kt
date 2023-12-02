@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -21,14 +22,11 @@ class MainViewModel : ViewModel() {
     fun fetchInitialData() {
         viewModelScope.launch {
             try {
-                val response = ApiConfig.service.getInitialObject().execute()
-                if (response.isSuccessful) {
-                    val initialResult = response.body()
-                    _initialData.value = initialResult
-                    fetchContent(1)
-                } else {
-                    Log.e("ERR", "Fetch has been failed")
-                }
+                val initialService = ApiConfig.service
+                val initialResult = initialService.getInitialObject()
+                Log.e("DATA", initialData.toString())
+                _initialData.value = initialResult
+                fetchContent(1)
 
             } catch (e: Exception) {
                 _error.value = "Error fetching initial data: ${e.message}"
@@ -39,14 +37,10 @@ class MainViewModel : ViewModel() {
 
     suspend fun fetchContent(id: Int) {
         try {
-            val call = ApiConfig.contentService.getContent(id)
-            val response = call.execute()
-            if (response.isSuccessful) {
-                val contentResult = response.body()
-                _content.value = contentResult
-            } else {
-                Log.e("ERR", "Fetch has been failed")
-            }
+            val service = ApiConfig.contentService
+            val content = service.getContent(id)
+            Log.e("DATA", content.toString())
+            _content.value = content
 
         } catch (e: Exception) {
             _error.value = "Error fetching content: ${e.message}"
