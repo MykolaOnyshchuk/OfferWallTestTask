@@ -1,6 +1,7 @@
 package com.example.offerwalltesttask
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,5 +27,10 @@ class WebViewFragment : Fragment() {
         webView.loadUrl(webPageUrl)
 
         return view
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ONPAUSE", "OnPause")
     }
 }

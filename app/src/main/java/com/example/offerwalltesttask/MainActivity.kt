@@ -35,18 +35,18 @@ class MainActivity : AppCompatActivity() {
 
             when (type) {
                 "text" -> supportFragmentManager.beginTransaction()
-                    .add(R.id.frameLayout, TextFragment()).commit()
+                    .replace(R.id.frameLayout, TextFragment()).commit()
 
                 "webview" -> supportFragmentManager.beginTransaction()
-                    .add(R.id.frameLayout, WebViewFragment()).commit()
+                    .replace(R.id.frameLayout, WebViewFragment()).commit()
 
                 "image" -> supportFragmentManager.beginTransaction()
-                    .add(R.id.frameLayout, ImageFragment()).commit()
+                    .replace(R.id.frameLayout, ImageFragment()).commit()
 
-                "game" -> Toast.makeText(this,
+                "game" -> Toast.makeText(this@MainActivity,
                     "Content's type is \"game\", ignore", Toast.LENGTH_SHORT).show()
 
-                else -> Toast.makeText(this,
+                else -> Toast.makeText(this@MainActivity,
                     "Type is unknown", Toast.LENGTH_SHORT).show()
             }
         }
