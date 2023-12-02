@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.viewModels
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel = MainViewModel()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         val nextBtn: Button
         var type: String
@@ -40,6 +42,12 @@ class MainActivity : AppCompatActivity() {
 
                 "image" -> supportFragmentManager.beginTransaction()
                     .add(R.id.frameLayout, ImageFragment()).commit()
+
+                "game" -> Toast.makeText(this,
+                    "Content's type is \"game\", ignore", Toast.LENGTH_SHORT).show()
+
+                else -> Toast.makeText(this,
+                    "Type is unknown", Toast.LENGTH_SHORT).show()
             }
         }
 
