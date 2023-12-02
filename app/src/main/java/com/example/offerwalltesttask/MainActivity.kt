@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val nextBtn: Button
         var type: String
-        var counter: Int = 1
+        var counter: Int = 0
         viewModel.contentCount.postValue(counter)
         var initialData: InitialData
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             counter++
             viewModel.contentCount.value = counter
             GlobalScope.async {
-                viewModel.fetchContent(counter % 4)
+                viewModel.fetchContent(counter % 4 + 1)
             }
         }
     }

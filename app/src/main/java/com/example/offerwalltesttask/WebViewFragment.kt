@@ -28,9 +28,4 @@ class WebViewFragment : Fragment() {
 
         return view
     }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("ONPAUSE", "OnPause")
-    }
 }

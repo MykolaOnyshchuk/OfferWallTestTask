@@ -23,7 +23,6 @@ class ImageFragment : Fragment() {
         val imgUrl = (viewModel.content.value as ContentImage).url
         Picasso.with(context).load(imgUrl).into(img)
 
-
         return view
     }
 }
