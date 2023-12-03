@@ -13,27 +13,17 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
-        val nextBtn: Button
-        var type: String
-        var counter: Int = 0
-        viewModel.contentCount.postValue(counter)
-        var initialData: InitialData
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        nextBtn = findViewById(R.id.nextBtn)
+        val nextBtn: Button
 
-        viewModel.initialData.observe(this) { data ->
-            Log.d("OBSERVED", "Initial Data: $data")
-            initialData = data
-        }
+        nextBtn = findViewById(R.id.nextBtn)
 
         viewModel.content.observe(this) { content ->
             Log.d("OBSERVED", "Content: $content")
-            type = content.type
 
-            when (type) {
+            when (content.type) {
                 "text" -> supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, TextFragment()).commit()
 
@@ -51,13 +41,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.fetchInitialData()
+        if (viewModel.contentCount == 0) {
+            viewModel.fetchInitialData()
+        }
 
         nextBtn.setOnClickListener {
-            counter++
-            viewModel.contentCount.value = counter
+            viewModel.contentCountIncrement()
             GlobalScope.async {
-                viewModel.fetchContent(counter % 4 + 1)
+                viewModel.fetchContent(viewModel.contentCount % (viewModel.initialData.value?.ids?.size
+                    ?: 0) + 1)
             }
         }
     }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     private val _initialData = MutableLiveData<InitialData>()
     val initialData: LiveData<InitialData> get() = _initialData
@@ -17,7 +17,9 @@ class MainViewModel : ViewModel() {
 
     private val _error = MutableLiveData<String>()
 
-    val contentCount = MutableLiveData<Int>()
+    private var _contentCount: Int = 0
+    val contentCount: Int get() = _contentCount
+    fun contentCountIncrement() = _contentCount++
 
 
     fun fetchInitialData() {
